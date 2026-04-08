@@ -38,177 +38,135 @@
   "menu": {
     "categories": [
       {
-        "kategorie": "Frittatine di Pasta (Appetizer)",
+        "kategorie": "Appetizer",
         "eintraege": [
-          "Frittatina Classica",
-          "Arancino Rosso",
-          "Crocche' Napoletano",
-          "Frittatina Bolognese",
-          "Frittatina Cacio e Pepe",
-          "Frittatina Carbonara",
-          "Frittatina Nerano",
-          "Frittatina Salsiccia e Friarielli",
-          "Frittatina Genovese",
-          "Frittatina Scarpariello",
-          "Frittatina Pasta e Patate",
-          "Frittatina Amatriciana"
+          { "name": "Frittatina Classica", "desc": "Pasta fritta, ragù napoletano, provola", "price": "4.50 €" },
+          { "name": "Arancino Rosso", "desc": "Risotto, ragù, mozzarella, pomodoro", "price": "4.50 €" },
+          { "name": "Crocché Napoletano", "desc": "Patate, provola, basilico", "price": "3.50 €" },
+          { "name": "Frittatina Bolognese", "desc": "Pasta fritta, ragù bolognese, besciamella", "price": "4.50 €" },
+          { "name": "Frittatina Cacio e Pepe", "desc": "Pecorino Romano, pepe nero", "price": "4.50 €" },
+          { "name": "Frittatina Carbonara", "desc": "Guanciale, uovo, pecorino", "price": "4.50 €" },
+          { "name": "Frittatina Nerano", "desc": "Zucchine, fior di latte, basilico", "price": "4.50 €" },
+          { "name": "Frittatina Salsiccia e Friarielli", "desc": "Salsiccia napoletana, friarielli, provola", "price": "5.00 €" },
+          { "name": "Frittatina Genovese", "desc": "Cipolla stufata, manzo, parmigiano", "price": "5.00 €" },
+          { "name": "Frittatina Scarpariello", "desc": "Pomodorini, peperoncino, parmigiano", "price": "4.50 €" },
+          { "name": "Frittatina Pasta e Patate", "desc": "Patate, pasta, provola", "price": "4.50 €" },
+          { "name": "Frittatina Amatriciana", "desc": "Guanciale, pomodoro, pecorino", "price": "4.50 €" }
         ]
       },
       {
-        "kategorie": "Panuozzi / Panini",
+        "kategorie": "Panuozzi & Panini",
         "eintraege": [
-          "Vesuvian Classic",
-          "Prosciutto & Burrata",
-          "Parmigiana Elegance",
-          "Porchetta Signature",
-          "Salsiccia e Patate",
-          "Perlage & Mortazza"
+          { "name": "Vesuvian Classic", "desc": "Porchetta, friarielli, provola affumicata", "price": "10.00 €" },
+          { "name": "Prosciutto & Burrata", "desc": "Crudo di Parma, burrata, basilico, EVO", "price": "13.00 €" },
+          { "name": "Parmigiana Elegance", "desc": "Melanzane, pomodoro, fior di latte, basilico", "price": "10.00 €" },
+          { "name": "Porchetta Signature", "desc": "Porchetta aromatica, senape, rucola", "price": "11.00 €" },
+          { "name": "Salsiccia e Patate", "desc": "Salsiccia, patate al forno, rosmarino", "price": "10.00 €" },
+          { "name": "Perlage & Mortazza", "desc": "Mortadella, stracciatella, pistacchio", "price": "12.00 €" }
         ]
-      },
-      {
-        "kategorie": "Battilocchi",
-        "eintraege": ["Vesuvian Classic", "Parmigiana", "Ortolana"]
       },
       {
         "kategorie": "Salad",
-        "eintraege": ["Rucola Salad", "Burrata 2.0", "Peperonata"]
-      },
-      {
-        "kategorie": "Le Pizze – Le Margherite",
-        "eintraege": ["Marinara", "Marinara Starita", "Cosacca"]
-      },
-      {
-        "kategorie": "Le Pizze – Le Marinare",
-        "eintraege": ["Margherita", "Wrong Margherita (Sbagliata)", "Bufala"]
-      },
-      {
-        "kategorie": "Le Pizze – Le Bianche",
         "eintraege": [
-          "Parma Adventure",
-          "Pizza Perlage & Coo 2.1",
-          "Pizza Patatona",
-          "Ortolana (Weiss Pizza)",
-          "5 Formaggi",
-          "Carbonara Special"
+          { "name": "Rucola Salad", "desc": "Rucola, grana padano, pomodorini, EVO", "price": "9.00 €" },
+          { "name": "Burrata 2.0", "desc": "Burrata, pomodori arrosto, basilico, EVO", "price": "13.50 €" },
+          { "name": "Peperonata", "desc": "Peperoni grigliati, capperi, olive, basilico", "price": "9.00 €" }
         ]
       },
       {
-        "kategorie": "Le Pizze – Our Signature",
+        "kategorie": "Le Pizze — Le Margherite",
         "eintraege": [
-          "Vegan",
-          "Veggy",
-          "Salsiccia & Friarielli",
-          "Diavola",
-          "Calzone Napoletano",
-          "Saint Gennaro 081 Calzone",
-          "Napule",
-          "Prosciuitto e Funghi",
-          "Capricciosa"
+          { "name": "Marinara", "desc": "San Marzano, aglio, origano, EVO", "price": "10.00 €" },
+          { "name": "Marinara Starita", "desc": "San Marzano, aglio, olive Taggiasche, capperi", "price": "12.00 €" },
+          { "name": "Cosacca", "desc": "San Marzano, pecorino, basilico, EVO", "price": "11.50 €" }
         ]
       },
       {
-        "kategorie": "Pizza in Teglia – Le Marinare",
-        "eintraege": ["Marinara", "Marinara Special", "Cosacca"]
-      },
-      {
-        "kategorie": "Pizza in Teglia – Le Margherite",
-        "eintraege": ["Margherita", "Wrong Margherita", "Bufala"]
-      },
-      {
-        "kategorie": "Pizza in Teglia – Weitere",
-        "eintraege": ["Diavola or Salami", "Prosciuitto e Funghi", "Vegan"]
-      },
-      {
-        "kategorie": "Extra Topping",
+        "kategorie": "Le Pizze — Le Marinare",
         "eintraege": [
-          "Burrata",
-          "Stracciatella",
-          "Fior di latte mozzarella",
-          "Fior di latte vegano",
-          "Piennolo Tomatoes",
-          "Parma ham (raw ham)",
-          "Spicy salami",
-          "Olive Taggiasche",
-          "Oyster mushrooms",
-          "Buffalo mozzarella",
-          "Salami mild",
-          "Nduja",
-          "grilled Carciofi (Artichokes)",
-          "Spicy Dip Bomba Napoletana",
-          "Mortadella",
-          "Salsiccia",
-          "Alici di Cetara",
-          "Rucola"
+          { "name": "Margherita", "desc": "San Marzano, fior di latte, basilico, EVO", "price": "12.00 €" },
+          { "name": "Wrong Margherita", "desc": "Fior di latte, pomodorini datterini, basilico", "price": "13.00 €" },
+          { "name": "Bufala", "desc": "San Marzano, buffalo mozzarella, basilico", "price": "15.00 €" }
+        ]
+      },
+      {
+        "kategorie": "Le Pizze — Le Bianche",
+        "eintraege": [
+          { "name": "Parma Adventure", "desc": "Fior di latte, prosciutto crudo, rucola, grana", "price": "16.00 €" },
+          { "name": "Pizza Perlage & Coo 2.1", "desc": "Stracciatella, mortadella, pistacchio", "price": "16.00 €" },
+          { "name": "Pizza Patatona", "desc": "Patate, salsiccia, fior di latte, rosmarino", "price": "14.50 €" },
+          { "name": "Ortolana", "desc": "Verdure grigliate, stracciatella, basilico", "price": "14.00 €" },
+          { "name": "5 Formaggi", "desc": "Fior di latte, gorgonzola, grana, pecorino, provola", "price": "15.50 €" },
+          { "name": "Carbonara Special", "desc": "Guanciale, uovo, pecorino, pepe nero", "price": "15.00 €" }
+        ]
+      },
+      {
+        "kategorie": "Le Pizze — Our Signature",
+        "eintraege": [
+          { "name": "Salsiccia & Friarielli", "desc": "Salsiccia napoletana, friarielli, provola affumicata", "price": "15.00 €" },
+          { "name": "Diavola", "desc": "San Marzano, spicy salami, fior di latte", "price": "14.50 €" },
+          { "name": "Calzone Napoletano", "desc": "Ricotta, salame, fior di latte, basilico", "price": "14.00 €" },
+          { "name": "Saint Gennaro 081 Calzone", "desc": "Ricotta, salsiccia, friarielli, provola", "price": "15.50 €" },
+          { "name": "Napule", "desc": "Pomodorini, olive, capperi, acciughe, origano", "price": "14.00 €" },
+          { "name": "Prosciutto e Funghi", "desc": "Fior di latte, prosciutto cotto, funghi", "price": "14.00 €" },
+          { "name": "Capricciosa", "desc": "Fior di latte, prosciutto, funghi, olive, carciofi", "price": "15.00 €" },
+          { "name": "Vegan", "desc": "Pomodoro, verdure, olive, capperi, EVO", "price": "13.00 €" }
+        ]
+      },
+      {
+        "kategorie": "Pizza in Teglia",
+        "note": "Roman-style thick crust · al taglio",
+        "eintraege": [
+          { "name": "Patate e Salsiccia", "desc": "Patate, salsiccia, rosmarino, fior di latte", "price": "6.00 €/slice" },
+          { "name": "Fiori di Zucca", "desc": "Zucchini flowers, acciughe, fior di latte", "price": "6.50 €/slice" },
+          { "name": "Pomodorino & Stracciatella", "desc": "Cherry tomatoes, stracciatella, basilico", "price": "5.50 €/slice" },
+          { "name": "Margherita", "desc": "San Marzano, fior di latte, basilico", "price": "5.00 €/slice" },
+          { "name": "Diavola", "desc": "San Marzano, spicy salami, fior di latte", "price": "5.50 €/slice" },
+          { "name": "Vegan", "desc": "Pomodoro, verdure, olive, EVO", "price": "5.00 €/slice" }
         ]
       },
       {
         "kategorie": "Desserts",
         "eintraege": [
-          "Tiramisu (Homemade)",
-          "Panna Cotta (Homemade)",
-          "Delizia al Limone",
-          "Mille Veli Pistacchio",
-          "Ricotta e Pere",
-          "Cheesecake with Wild Fruits"
+          { "name": "Tiramisù", "desc": "Savoiardi al caffè, mascarpone, cacao — homemade", "price": "7.00 €" },
+          { "name": "Panna Cotta", "desc": "Vanilla bean, berry compote — homemade", "price": "6.50 €" },
+          { "name": "Delizia al Limone", "desc": "Crema al limone, pan di spagna", "price": "7.00 €" },
+          { "name": "Mille Veli Pistacchio", "desc": "Mille-feuille, crema al pistacchio", "price": "7.50 €" },
+          { "name": "Cannoli Siciliani", "desc": "Ricotta, candied orange, pistacchio", "price": "7.50 €" },
+          { "name": "Cheesecake con Frutti di Bosco", "desc": "Homemade, berries, vanilla", "price": "7.00 €" }
         ]
       },
       {
-        "kategorie": "Drinks – Wasser & Softdrinks",
+        "kategorie": "Drinks — Soft & Homemade",
         "eintraege": [
-          "Aqua Panna / San Pellegrino 0.25L / 0.75L",
-          "Bio Cortese Soft Drinks (0.275L)",
-          "Cola / Cola Zero (0.2L)",
-          "Bio Vio Soft Drink (0.2L)"
+          { "name": "Acqua Panna / San Pellegrino 0.25L", "price": "3.00 €" },
+          { "name": "Acqua Panna / San Pellegrino 0.75L", "price": "5.00 €" },
+          { "name": "Homemade Lemonade", "price": "4.50 €" },
+          { "name": "Homemade Iced Tea", "price": "4.50 €" },
+          { "name": "Cola / Cola Zero 0.2L", "price": "3.50 €" }
         ]
       },
       {
-        "kategorie": "Drinks – Bier",
+        "kategorie": "Drinks — Beer & Wine",
         "eintraege": [
-          "Birra Nastro Azzuro 0% Alc. (0.33L)",
-          "Birra Nastro Azzuro 4.6% Vol (0.33L)",
-          "Birra Ichnusa Non Filtrata 5% Vol (0.5L)"
+          { "name": "Birra Nastro Azzurro 0% 0.33L", "price": "4.00 €" },
+          { "name": "Birra Nastro Azzurro 4.6% 0.33L", "price": "4.50 €" },
+          { "name": "Birra Ichnusa Non Filtrata 0.5L", "price": "5.50 €" },
+          { "name": "Red Wine Glass 0.2L — Negroamaro", "price": "8.00 €" },
+          { "name": "White Wine Glass 0.2L — Vermentino", "price": "7.50 €" },
+          { "name": "Prosecco 0.1L", "price": "6.00 €" }
         ]
       },
       {
-        "kategorie": "Drinks – Homemade",
+        "kategorie": "Drinks — Espresso & Spirits",
         "eintraege": [
-          "Homemade Lemonade 0.25L",
-          "Homemade Icetea 0.25L"
+          { "name": "Espresso", "price": "2.50 €" },
+          { "name": "Doppio / Americano", "price": "3.50 €" },
+          { "name": "Grappa 2cl", "price": "5.00 €" },
+          { "name": "Limoncello 2cl", "price": "4.00 €" },
+          { "name": "Sambuca 2cl", "price": "4.00 €" },
+          { "name": "Signature Long Drinks", "desc": "Ask staff or scan QR-Code", "price": "—" }
         ]
-      },
-      {
-        "kategorie": "Drinks – Hot Drinks",
-        "eintraege": [
-          "Espresso",
-          "Doppio (Double Espresso)",
-          "Lungo / Americano",
-          "Div. Tea"
-        ]
-      },
-      {
-        "kategorie": "Drinks – Distillated",
-        "eintraege": ["Grappa 2cl", "Sambuca", "Limoncello 2cl"]
-      },
-      {
-        "kategorie": "Drinks – Wine (Glass)",
-        "eintraege": [
-          "Red Wine Glass 0.2L (Negroamaro)",
-          "White Wine Glass 0.2L (Vermentino)",
-          "Prosecco (0.1L)"
-        ]
-      },
-      {
-        "kategorie": "Drinks – Wine (Bottle)",
-        "eintraege": [
-          "Red Wine Bottle 0.75L – San Marzano, Negroamaro, Tratturi",
-          "Red Wine Bottle 0.75L – Primitivi di Manduria DOP",
-          "White Wine Bottle 0.75L – Alturis Sauvignon, Vignaioli in Terre di Confine",
-          "White Wine Bottle 0.75L – Vermentino"
-        ]
-      },
-      {
-        "kategorie": "Aperitivi & Longdrink",
-        "eintraege": ["Signature Long Drinks (ask staff / scan QR)"]
       }
     ]
   }

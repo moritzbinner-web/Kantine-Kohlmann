@@ -11,34 +11,29 @@
   --font-sans:       var(--font-cormorant);
   --font-minimal:    var(--font-jost);
 
-  /* ── THEME A · Saint Genneraro 81 (Restaurant) ───────────────── */
-  /* Inspiration: Dolce & Gabbana · Neapolitanischer Palazzo · Goldene Akzente */
-  --color-rest-blue:        #1B2F6B;
-  --color-rest-blue-light:  #253D87;
-  --color-rest-blue-dark:   #0F1B42;
-  --color-rest-red:         #9B1B1B;
-  --color-rest-red-deep:    #6B0E0E;
-  --color-rest-gold:        #C8A84B;
-  --color-rest-gold-light:  #E2C97E;
-  --color-rest-cream:       #F5F0E8;
-  --color-rest-ivory:       #FDFAF4;
-  --color-rest-text:        #1A1A2E;
-
-  /* ── THEME B · Kantine Kohlmann (Bar) ────────────────────────── */
-  /* Inspiration: Mediterrane Eleganz · Naturmaterialien · Reduzierte Ästhetik */
-  --color-bar-green:        #1A3320;
-  --color-bar-green-mid:    #2D4A3E;
-  --color-bar-green-light:  #3D6352;
-  --color-bar-wood:         #3D2514;
-  --color-bar-wood-light:   #6B4226;
-  --color-bar-sand:         #C4A47C;
-  --color-bar-sand-light:   #E8D9C0;
-  --color-bar-linen:        #F2EDE4;
-  --color-bar-text:         #1A1A1A;
-
-  /* ── Shared Globals ──────────────────────────────────────────── */
-  --color-black:            #0A0A0A;
+  /* ── Ultra-Premium Dark Palette (Dolce & Gabbana Noir) ──────── */
+  --color-base:             #080808;   /* Global page background       */
+  --color-surface:          #0d0d0d;   /* Raised surface               */
+  --color-surface-2:        #111111;   /* Second tier surface          */
+  --color-off-white:        #F2EFE9;   /* Champagne — primary text     */
   --color-white:            #FFFFFF;
+  --color-black:            #050505;
+
+  /* ── THEME A · Restaurant — deep navy radial ghost ───────────── */
+  --color-rest-bg:          #080808;
+  --color-rest-gradient-from: #051024; /* barely-there navy at bottom  */
+  --color-rest-accent:      #C8A84B;   /* gold accent only             */
+  --color-rest-text:        #F2EFE9;
+
+  /* ── THEME B · Bar — deep forest ghost ──────────────────────── */
+  --color-bar-bg:           #080808;
+  --color-bar-gradient-from: #021207;  /* barely-there forest at bottom */
+  --color-bar-accent:       #B8A98A;   /* warm taupe accent            */
+  --color-bar-text:         #F2EFE9;
+
+  /* ── THEME C · Events — pure noir ───────────────────────────── */
+  --color-events-bg:        #050505;
+  --color-events-text:      #F2EFE9;
 
   /* ── Spacing & Radius ────────────────────────────────────────── */
   --radius-sm:    0.25rem;
@@ -62,8 +57,8 @@ html {
 }
 
 body {
-  background-color: #0A0A0A;
-  color: #FFFFFF;
+  background-color: #080808;
+  color: #F2EFE9;
   overflow-x: hidden;
 }
 

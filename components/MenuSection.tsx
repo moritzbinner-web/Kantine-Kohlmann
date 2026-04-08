@@ -2,233 +2,277 @@
 
 import { motion } from 'framer-motion';
 
-interface MenuItem {
+interface DishEntry {
   name: string;
   desc?: string;
+  price?: string;
 }
 
 interface MenuCategory {
   kategorie: string;
-  eintraege: string[];
+  note?: string;
+  eintraege: (DishEntry | string)[];
 }
 
 interface MenuSectionProps {
   categories: MenuCategory[];
 }
 
-// Parse a dish entry into a name (and optional italic sub-note)
-function parseEntry(raw: string): MenuItem {
-  // If entry has parentheses, split them for italic desc
-  const match = raw.match(/^(.*?)\s*\(([^)]+)\)\s*(.*)$/);
-  if (match) {
-    const name = (match[1] + (match[3] ? ' ' + match[3] : '')).trim();
-    return { name, desc: match[2] };
-  }
-  return { name: raw };
+// Normalise — handle both old string[] and new object[] formats
+function normaliseDish(raw: DishEntry | string): DishEntry {
+  return typeof raw === 'string' ? { name: raw } : raw;
 }
 
-// Animation for each dish row
-const rowVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
-  },
-};
-
-const categoryVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.04 } },
-};
-
-// Group categories into pairs for the two-column grid
-function pairCategories(cats: MenuCategory[]): [MenuCategory, MenuCategory | null][] {
-  const pairs: [MenuCategory, MenuCategory | null][] = [];
-  for (let i = 0; i < cats.length; i += 2) {
-    pairs.push([cats[i], cats[i + 1] ?? null]);
-  }
-  return pairs;
+// Split categories into food and drinks for layout
+function isFoodCat(k: string) {
+  return !k.toLowerCase().startsWith('drinks');
 }
 
-function CategoryBlock({ cat }: { cat: MenuCategory }) {
+// ── Individual dish row ───────────────────────────────────────────────────────
+function DishRow({ dish }: { dish: DishEntry }) {
   return (
-    <motion.div
-      variants={categoryVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-60px' }}
+    <motion.li
+      className="py-[0.9rem]"
+      style={{ borderBottom: '1px solid rgba(242,239,233,0.06)' }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      {/* Category title */}
-      <motion.h3
-        className="menu-category-title mb-8"
-        variants={rowVariants}
-      >
-        {cat.kategorie.replace(/^Le Pizze – |^Pizza in Teglia – /, '')}
-      </motion.h3>
+      {/* Main row: name — dotted leader — price */}
+      <div className="flex items-baseline gap-0">
+        <span
+          style={{
+            fontFamily: 'var(--font-playfair)',
+            fontSize: '0.95rem',
+            fontWeight: 400,
+            color: '#F2EFE9',
+            lineHeight: 1.4,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {dish.name}
+        </span>
 
-      {/* Dish list */}
-      <ul className="space-y-0">
-        {cat.eintraege.map((raw, j) => {
-          const { name, desc } = parseEntry(raw);
-          return (
-            <motion.li
-              key={`${raw}-${j}`}
-              variants={rowVariants}
-              className="py-3 border-b"
-              style={{ borderColor: 'rgba(240,236,230,0.07)' }}
-            >
-              <div className="flex items-baseline justify-between gap-4">
-                <span className="menu-dish-name">{name}</span>
-              </div>
-              {desc && (
-                <span className="menu-dish-desc block mt-0.5">{desc}</span>
-              )}
-            </motion.li>
-          );
-        })}
-      </ul>
-    </motion.div>
+        {/* Dotted leader */}
+        <span
+          className="flex-grow mx-3"
+          style={{
+            borderBottom: '1px dotted rgba(242,239,233,0.18)',
+            marginBottom: '5px',
+            minWidth: '1rem',
+          }}
+        />
+
+        {/* Price */}
+        <span
+          style={{
+            fontFamily: 'var(--font-jost)',
+            fontSize: '0.72rem',
+            fontWeight: 400,
+            letterSpacing: '0.08em',
+            color: dish.price && dish.price !== '—'
+              ? 'rgba(242,239,233,0.55)'
+              : 'rgba(242,239,233,0.22)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {dish.price ?? ''}
+        </span>
+      </div>
+
+      {/* Description — italic, small, below */}
+      {dish.desc && (
+        <span
+          style={{
+            fontFamily: 'var(--font-jost)',
+            fontSize: '0.68rem',
+            fontWeight: 300,
+            letterSpacing: '0.03em',
+            color: 'rgba(242,239,233,0.35)',
+            fontStyle: 'italic',
+            display: 'block',
+            marginTop: '0.25rem',
+            lineHeight: 1.6,
+          }}
+        >
+          {dish.desc}
+        </span>
+      )}
+    </motion.li>
   );
 }
 
-// Signature "Aperitif Callout" for Drinks categories
-function AperitifCallout({ cat }: { cat: MenuCategory }) {
+// ── Category block ────────────────────────────────────────────────────────────
+function CategoryBlock({ cat }: { cat: MenuCategory }) {
+  // Strip prefixes for cleaner display
+  const title = cat.kategorie
+    .replace(/^Le Pizze — |^Pizza in Teglia — |^Drinks — /, '');
+
   return (
-    <motion.div
-      className="menu-surface-inset p-8 md:p-10"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
-    >
-      <h3 className="menu-category-title mb-8">
-        {cat.kategorie.replace(/^Drinks – /, '')}
-      </h3>
-      <ul className="space-y-0">
-        {cat.eintraege.map((raw, j) => {
-          const { name, desc } = parseEntry(raw);
-          return (
-            <li
-              key={`${raw}-${j}`}
-              className="py-3 border-b"
-              style={{ borderColor: 'rgba(240,236,230,0.07)' }}
-            >
-              <span className="menu-dish-name">{name}</span>
-              {desc && <span className="menu-dish-desc block mt-0.5">{desc}</span>}
-            </li>
-          );
-        })}
+    <div>
+      <motion.div
+        className="mb-7"
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
+        <h3
+          style={{
+            fontFamily: 'var(--font-playfair)',
+            fontSize: 'clamp(1.6rem, 3vw, 2.4rem)',
+            fontWeight: 400,
+            fontStyle: 'italic',
+            letterSpacing: '0.02em',
+            lineHeight: 1.05,
+            color: '#F2EFE9',
+          }}
+        >
+          {title}
+        </h3>
+        {cat.note && (
+          <p
+            style={{
+              fontFamily: 'var(--font-jost)',
+              fontSize: '0.62rem',
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: 'rgba(242,239,233,0.3)',
+              marginTop: '0.35rem',
+            }}
+          >
+            {cat.note}
+          </p>
+        )}
+      </motion.div>
+
+      <ul>
+        {cat.eintraege.map((raw, j) => (
+          <DishRow key={j} dish={normaliseDish(raw)} />
+        ))}
       </ul>
-    </motion.div>
+    </div>
   );
 }
 
 export default function MenuSection({ categories }: MenuSectionProps) {
-  // Split into food categories and drinks categories
-  const foodCats  = categories.filter((c) => !c.kategorie.startsWith('Drinks'));
-  const drinkCats = categories.filter((c) => c.kategorie.startsWith('Drinks'));
-  const foodPairs = pairCategories(foodCats);
+  const foodCats  = categories.filter((c) => isFoodCat(c.kategorie));
+  const drinkCats = categories.filter((c) => !isFoodCat(c.kategorie));
 
   return (
-    <section id="menu" className="menu-surface py-28 px-6 md:px-14 lg:px-24">
-      <div className="max-w-[1400px] mx-auto">
+    <section
+      id="menu"
+      style={{ background: '#080808' }}
+      className="py-28 px-6 md:px-14 lg:px-24"
+    >
+      <div className="max-w-[1200px] mx-auto">
 
-        {/* ── Section header ───────────────────────────────────────────────── */}
+        {/* ── Section header ──────────────────────────────────────────────── */}
         <motion.div
           className="mb-20"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          {/* Asymmetric: category label lives in left third */}
-          <div className="grid grid-cols-3 gap-6 items-end">
-            <div>
-              <span
-                className="block text-[0.55rem] uppercase text-white/30"
-                style={{ fontFamily: 'var(--font-jost)', letterSpacing: '0.5em' }}
-              >
-                La Nostra Cucina
-              </span>
-            </div>
-            <div className="col-span-2">
-              <h2
-                className="text-white"
-                style={{
-                  fontFamily: 'var(--font-playfair)',
-                  fontSize: 'clamp(3rem, 6vw, 6rem)',
-                  fontWeight: 400,
-                  letterSpacing: '-0.02em',
-                  lineHeight: 0.95,
-                  fontStyle: 'italic',
-                }}
-              >
-                Speise&shy;karte
-              </h2>
-            </div>
+          <div className="flex items-end gap-10">
+            <span
+              style={{
+                fontFamily: 'var(--font-jost)',
+                fontSize: '0.55rem',
+                letterSpacing: '0.5em',
+                textTransform: 'uppercase',
+                color: 'rgba(242,239,233,0.28)',
+                lineHeight: 1,
+                paddingBottom: '0.5rem',
+              }}
+            >
+              La Nostra Cucina
+            </span>
+            <h2
+              style={{
+                fontFamily: 'var(--font-playfair)',
+                fontSize: 'clamp(3.5rem, 7vw, 7rem)',
+                fontWeight: 400,
+                fontStyle: 'italic',
+                letterSpacing: '-0.02em',
+                lineHeight: 0.92,
+                color: '#F2EFE9',
+              }}
+            >
+              Speisekarte
+            </h2>
           </div>
         </motion.div>
 
-        {/* ── Food categories — asymmetric two-column grid ─────────────────── */}
-        <div className="space-y-20">
-          {foodPairs.map(([left, right], pairIdx) => (
-            <div key={pairIdx}>
-              {/* Wide left column (2/3) + narrow right column (1/3) — alternates */}
-              <div
-                className={`grid gap-12 md:gap-20 ${
-                  right
-                    ? pairIdx % 2 === 0
-                      ? 'md:grid-cols-[2fr_1fr]'
-                      : 'md:grid-cols-[1fr_2fr]'
-                    : 'md:grid-cols-1 max-w-2xl'
-                }`}
-              >
-                <CategoryBlock cat={left} />
-                {right && <CategoryBlock cat={right} />}
-              </div>
+        {/* ── Food categories — alternating 2-col asymmetric grid ─────────── */}
+        <div className="space-y-24">
+          {/* First 3 categories — full width stacked for drama */}
+          {foodCats.slice(0, 3).map((cat) => (
+            <div key={cat.kategorie}>
+              <CategoryBlock cat={cat} />
+            </div>
+          ))}
 
-              {/* Dot divider between pairs */}
-              <div className="menu-dot-divider mt-16">
-                <span /><span /><span />
-              </div>
+          {/* Remaining — two columns, alternating width */}
+          {foodCats.slice(3).reduce<MenuCategory[][]>((pairs, cat, i) => {
+            if (i % 2 === 0) pairs.push([cat]);
+            else pairs[pairs.length - 1].push(cat);
+            return pairs;
+          }, []).map((pair, pIdx) => (
+            <div
+              key={pIdx}
+              className={`grid gap-16 md:gap-24 ${
+                pair.length === 2
+                  ? pIdx % 2 === 0
+                    ? 'md:grid-cols-[5fr_4fr]'
+                    : 'md:grid-cols-[4fr_5fr]'
+                  : 'md:grid-cols-1 max-w-2xl'
+              }`}
+            >
+              {pair.map((cat) => <CategoryBlock key={cat.kategorie} cat={cat} />)}
             </div>
           ))}
         </div>
 
-        {/* ── Drinks — Aperitif Callout style ──────────────────────────────── */}
+        {/* ── Dot divider ──────────────────────────────────────────────────── */}
+        <div className="flex items-center justify-center gap-2 my-24">
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              style={{ width: 4, height: 4, background: 'rgba(242,239,233,0.15)', display: 'block' }}
+            />
+          ))}
+        </div>
+
+        {/* ── Drinks — three-column aperitif callout grid ──────────────────── */}
         {drinkCats.length > 0 && (
-          <div className="mt-24">
+          <div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              className="mb-16"
+              initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="mb-16"
             >
-              <span
-                className="block text-[0.55rem] uppercase text-white/30 mb-4"
-                style={{ fontFamily: 'var(--font-jost)', letterSpacing: '0.5em' }}
-              >
-                Da Bere
-              </span>
               <h2
-                className="text-white"
                 style={{
                   fontFamily: 'var(--font-playfair)',
-                  fontSize: 'clamp(2.5rem, 5vw, 5rem)',
+                  fontSize: 'clamp(2.8rem, 5vw, 5.5rem)',
                   fontWeight: 400,
                   letterSpacing: '-0.01em',
-                  lineHeight: 0.95,
+                  lineHeight: 0.92,
+                  color: '#F2EFE9',
                 }}
               >
                 Drinks
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-14 md:gap-16">
               {drinkCats.map((cat) => (
-                <AperitifCallout key={cat.kategorie} cat={cat} />
+                <CategoryBlock key={cat.kategorie} cat={cat} />
               ))}
             </div>
           </div>

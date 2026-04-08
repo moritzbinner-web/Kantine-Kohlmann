@@ -26,7 +26,10 @@ export default async function RestaurantPage() {
   const { hero, about, menu } = restaurantData;
 
   return (
-    <div style={{ background: '#0a0a0a' }} className="min-h-screen">
+    <div
+      className="min-h-screen"
+      style={{ background: 'radial-gradient(ellipse 120% 30% at 50% 100%, #051024 0%, #080808 45%)' }}
+    >
 
       {/* ── Navigation ────────────────────────────────────────────────────── */}
       <nav
