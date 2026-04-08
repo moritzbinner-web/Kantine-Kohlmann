@@ -1,26 +1,181 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ═══════════════════════════════════════════════════════════════════════════
+   GASTRO SPLIT – DESIGN SYSTEM
+   Zwei strikt getrennte Luxus-Designsprachen, definiert als CSS Custom Props.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ── Typografie ──────────────────────────────────────────────── */
+  --font-display:    var(--font-playfair);
+  --font-sans:       var(--font-cormorant);
+  --font-minimal:    var(--font-jost);
+
+  /* ── THEME A · Saint Genneraro 81 (Restaurant) ───────────────── */
+  /* Inspiration: Dolce & Gabbana · Neapolitanischer Palazzo · Goldene Akzente */
+  --color-rest-blue:        #1B2F6B;
+  --color-rest-blue-light:  #253D87;
+  --color-rest-blue-dark:   #0F1B42;
+  --color-rest-red:         #9B1B1B;
+  --color-rest-red-deep:    #6B0E0E;
+  --color-rest-gold:        #C8A84B;
+  --color-rest-gold-light:  #E2C97E;
+  --color-rest-cream:       #F5F0E8;
+  --color-rest-ivory:       #FDFAF4;
+  --color-rest-text:        #1A1A2E;
+
+  /* ── THEME B · Kantine Kohlmann (Bar) ────────────────────────── */
+  /* Inspiration: Mediterrane Eleganz · Naturmaterialien · Reduzierte Ästhetik */
+  --color-bar-green:        #1A3320;
+  --color-bar-green-mid:    #2D4A3E;
+  --color-bar-green-light:  #3D6352;
+  --color-bar-wood:         #3D2514;
+  --color-bar-wood-light:   #6B4226;
+  --color-bar-sand:         #C4A47C;
+  --color-bar-sand-light:   #E8D9C0;
+  --color-bar-linen:        #F2EDE4;
+  --color-bar-text:         #1A1A1A;
+
+  /* ── Shared Globals ──────────────────────────────────────────── */
+  --color-black:            #0A0A0A;
+  --color-white:            #FFFFFF;
+
+  /* ── Spacing & Radius ────────────────────────────────────────── */
+  --radius-sm:    0.25rem;
+  --radius-md:    0.5rem;
+  --radius-lg:    1rem;
+  --radius-xl:    1.5rem;
+  --radius-pill:  9999px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base Reset ──────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+/* ── Glassmorphism Utilities ─────────────────────────────────────────────── */
+.glass-rest {
+  background: rgba(27, 47, 107, 0.25);
+  border: 1px solid rgba(200, 168, 75, 0.30);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.glass-bar {
+  background: rgba(26, 51, 32, 0.28);
+  border: 1px solid rgba(196, 164, 124, 0.30);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.glass-white {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+}
+
+/* ── Restaurant – Goldene Ornamentlinie ──────────────────────────────────── */
+.border-ornament-rest::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #C8A84B 30%,
+    #E2C97E 50%,
+    #C8A84B 70%,
+    transparent 100%
+  );
+  margin-bottom: 1.5rem;
+}
+
+.border-ornament-rest::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #C8A84B 30%,
+    #E2C97E 50%,
+    #C8A84B 70%,
+    transparent 100%
+  );
+  margin-top: 1.5rem;
+}
+
+/* ── Video Hero ──────────────────────────────────────────────────────────── */
+.video-hero {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.video-hero video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.10) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* ── Gallery Card ────────────────────────────────────────────────────────── */
+.gallery-card {
+  overflow: hidden;
+  position: relative;
+}
+
+.gallery-card img {
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.gallery-card:hover img {
+  transform: scale(1.07);
+}
+
+/* ── Lenis CSS Reset ─────────────────────────────────────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }

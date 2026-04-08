@@ -1,0 +1,56 @@
+{
+  "page": "Bar",
+  "name": "Kantine Kohlmann Bar",
+  "tagline": "Bar · Cocktails · Wein · Kreuzberg",
+  "hero": {
+    "videoSrc": "/videos/bar.mp4",
+    "videoPlaceholder": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "imageSrc": "/images/Kantine Bar/bar_galerie_1.jpg",
+    "headline": "La Dolce Notte",
+    "subline": "Cocktails · Naturwein · Aperitivo"
+  },
+  "about": {
+    "headline": "Kantine Kohlmann Bar",
+    "text": "Gemütliche Atmosphäre, exzellente Weine und perfekt gemixte Cocktails für den Abend in Kreuzberg."
+  },
+  "contact": {
+    "address": "Skalitzer Str. 64, 10997 Berlin",
+    "phone": "",
+    "email": ""
+  },
+  "hours": [
+    { "days": "Dienstag – Donnerstag", "time": "18:00 – 02:00 Uhr" },
+    { "days": "Freitag – Samstag", "time": "18:00 – 04:00 Uhr" },
+    { "days": "Sonntag – Montag", "time": "Geschlossen" }
+  ],
+  "drink_highlights": [
+    { "name": "Espresso-Martini", "category": "Cocktails" },
+    { "name": "Moskauer Maultier", "category": "Cocktails" },
+    { "name": "Negroni", "category": "Cocktails" }
+  ],
+  "gallery": [
+    { "src": "/images/Kantine Bar/bar_galerie_1.jpg", "alt": "Bar Ambiente" },
+    { "src": "/images/Kantine Bar/bar_galerie_2.jpg", "alt": "Cocktail Crafting" },
+    { "src": "/images/Kantine Bar/bar_galerie_04.jpg", "alt": "Bar Detail" },
+    { "src": "/images/Kantine Bar/bar07.jpg", "alt": "Abendstimmung" },
+    { "src": "/images/Kantine Bar/bar09-1.jpg", "alt": "Nachtleben" },
+    { "src": "/images/Kantine Bar/KK_23072015_0033-Kopie.jpg", "alt": "Gäste & Atmosphäre" },
+    { "src": "/images/Kantine Bar/KK_23072015_0301-Kopie.jpg", "alt": "Bar-Counter" },
+    { "src": "/images/Kantine Bar/KK_23072015_0424-Kopie.jpg", "alt": "Interieur Nacht" },
+    { "src": "/images/Kantine Bar/kantine_kohlmann_0218-Kopie.jpg", "alt": "Bar Stimmung" },
+    { "src": "/images/Kantine Bar/kantine_kohlmann_0241-Kopie.jpg", "alt": "Barkeeper" },
+    { "src": "/images/Kantine Bar/kantine_kohlmann_0438-Kopie.jpg", "alt": "Bar Detail 2" },
+    { "src": "/images/Kantine Bar/kantine_kohlmann_0483-Kopie.jpg", "alt": "Nacht an der Bar" }
+  ],
+  "events": {
+    "label": "Events & Private Hire",
+    "url": "/events",
+    "teaser": "Die Kantine Kohlmann steht für private Abende, Firmenfeiern und exklusive Verkostungsabende zur Verfügung.",
+    "gallery": [
+      { "src": "/images/Event/Event4-1.jpg", "alt": "Private Event" },
+      { "src": "/images/Event/Event5-1.jpg", "alt": "Firmenfeier" },
+      { "src": "/images/Event/event2-1.jpg", "alt": "Abendveranstaltung" },
+      { "src": "/images/Event/KK_23072015_0613.jpg", "alt": "Gala Abend" }
+    ]
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "page": "Restaurant",
+  "name": "Saint Gennaro 081",
+  "tagline": "Cucina Napoletana · Pizza · Kreuzberg",
+  "hero": {
+    "videoSrc": "/videos/restaurant.mp4",
+    "videoPlaceholder": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "imageSrc": "/images/Restaurant/Resto111.jpg",
+    "headline": "L'Italia nel tuo cuore",
+    "subline": "Napoletanische Küche · Seit 1981 · Berlin"
+  },
+  "about": {
+    "headline": "Una Storia d'Amore",
+    "text": "Handgemachte Pasta, tagesfrischer Fisch und bio-zertifiziertes Fleisch. Unsere Küche respektiert das Produkt — und bringt es zu seiner vollkommenen Form. Neapel in Berlin Kreuzberg."
+  },
+  "contact": {
+    "address": "Skalitzer Str. 64, 10997 Berlin",
+    "phone": "",
+    "email": ""
+  },
+  "hours": [
+    { "days": "Dienstag – Freitag", "time": "18:00 – 23:00 Uhr" },
+    { "days": "Samstag – Sonntag", "time": "12:00 – 23:00 Uhr" },
+    { "days": "Montag", "time": "Geschlossen" }
+  ],
+  "gallery": [
+    { "src": "/images/Restaurant/Resto111.jpg", "alt": "Restaurant Ambiente" },
+    { "src": "/images/Restaurant/Resto2.jpg", "alt": "Elegantes Ambiente" },
+    { "src": "/images/Restaurant/Resto3.jpg", "alt": "Tischkultur" },
+    { "src": "/images/Restaurant/Resto4.jpg", "alt": "Dining Erfahrung" },
+    { "src": "/images/Restaurant/KK_23072015_0001.jpg", "alt": "Das Restaurant" },
+    { "src": "/images/Restaurant/KK_23072015_0008-Kopie.jpg", "alt": "Atmosphäre" },
+    { "src": "/images/Restaurant/kantine_kohlmann111.jpg", "alt": "Interior Detail" },
+    { "src": "/images/Restaurant/IMG_8155-Kopie.jpg", "alt": "Stimmungsvolles Licht" },
+    { "src": "/images/Restaurant/5.3.KK_23072015_0047-Kopie.jpg", "alt": "Küche & Details" },
+    { "src": "/images/Restaurant/kantine_kohlmann_0422-Kopie.jpg", "alt": "Restaurant Nacht" }
+  ],
+  "menu": {
+    "categories": [
+      {
+        "kategorie": "Frittatine di Pasta (Appetizer)",
+        "eintraege": [
+          "Frittatina Classica",
+          "Arancino Rosso",
+          "Crocche' Napoletano",
+          "Frittatina Bolognese",
+          "Frittatina Cacio e Pepe",
+          "Frittatina Carbonara",
+          "Frittatina Nerano",
+          "Frittatina Salsiccia e Friarielli",
+          "Frittatina Genovese",
+          "Frittatina Scarpariello",
+          "Frittatina Pasta e Patate",
+          "Frittatina Amatriciana"
+        ]
+      },
+      {
+        "kategorie": "Panuozzi / Panini",
+        "eintraege": [
+          "Vesuvian Classic",
+          "Prosciutto & Burrata",
+          "Parmigiana Elegance",
+          "Porchetta Signature",
+          "Salsiccia e Patate",
+          "Perlage & Mortazza"
+        ]
+      },
+      {
+        "kategorie": "Battilocchi",
+        "eintraege": ["Vesuvian Classic", "Parmigiana", "Ortolana"]
+      },
+      {
+        "kategorie": "Salad",
+        "eintraege": ["Rucola Salad", "Burrata 2.0", "Peperonata"]
+      },
+      {
+        "kategorie": "Le Pizze – Le Margherite",
+        "eintraege": ["Marinara", "Marinara Starita", "Cosacca"]
+      },
+      {
+        "kategorie": "Le Pizze – Le Marinare",
+        "eintraege": ["Margherita", "Wrong Margherita (Sbagliata)", "Bufala"]
+      },
+      {
+        "kategorie": "Le Pizze – Le Bianche",
+        "eintraege": [
+          "Parma Adventure",
+          "Pizza Perlage & Coo 2.1",
+          "Pizza Patatona",
+          "Ortolana (Weiss Pizza)",
+          "5 Formaggi",
+          "Carbonara Special"
+        ]
+      },
+      {
+        "kategorie": "Le Pizze – Our Signature",
+        "eintraege": [
+          "Vegan",
+          "Veggy",
+          "Salsiccia & Friarielli",
+          "Diavola",
+          "Calzone Napoletano",
+          "Saint Gennaro 081 Calzone",
+          "Napule",
+          "Prosciuitto e Funghi",
+          "Capricciosa"
+        ]
+      },
+      {
+        "kategorie": "Pizza in Teglia – Le Marinare",
+        "eintraege": ["Marinara", "Marinara Special", "Cosacca"]
+      },
+      {
+        "kategorie": "Pizza in Teglia – Le Margherite",
+        "eintraege": ["Margherita", "Wrong Margherita", "Bufala"]
+      },
+      {
+        "kategorie": "Pizza in Teglia – Weitere",
+        "eintraege": ["Diavola or Salami", "Prosciuitto e Funghi", "Vegan"]
+      },
+      {
+        "kategorie": "Extra Topping",
+        "eintraege": [
+          "Burrata",
+          "Stracciatella",
+          "Fior di latte mozzarella",
+          "Fior di latte vegano",
+          "Piennolo Tomatoes",
+          "Parma ham (raw ham)",
+          "Spicy salami",
+          "Olive Taggiasche",
+          "Oyster mushrooms",
+          "Buffalo mozzarella",
+          "Salami mild",
+          "Nduja",
+          "grilled Carciofi (Artichokes)",
+          "Spicy Dip Bomba Napoletana",
+          "Mortadella",
+          "Salsiccia",
+          "Alici di Cetara",
+          "Rucola"
+        ]
+      },
+      {
+        "kategorie": "Desserts",
+        "eintraege": [
+          "Tiramisu (Homemade)",
+          "Panna Cotta (Homemade)",
+          "Delizia al Limone",
+          "Mille Veli Pistacchio",
+          "Ricotta e Pere",
+          "Cheesecake with Wild Fruits"
+        ]
+      },
+      {
+        "kategorie": "Drinks – Wasser & Softdrinks",
+        "eintraege": [
+          "Aqua Panna / San Pellegrino 0.25L / 0.75L",
+          "Bio Cortese Soft Drinks (0.275L)",
+          "Cola / Cola Zero (0.2L)",
+          "Bio Vio Soft Drink (0.2L)"
+        ]
+      },
+      {
+        "kategorie": "Drinks – Bier",
+        "eintraege": [
+          "Birra Nastro Azzuro 0% Alc. (0.33L)",
+          "Birra Nastro Azzuro 4.6% Vol (0.33L)",
+          "Birra Ichnusa Non Filtrata 5% Vol (0.5L)"
+        ]
+      },
+      {
+        "kategorie": "Drinks – Homemade",
+        "eintraege": [
+          "Homemade Lemonade 0.25L",
+          "Homemade Icetea 0.25L"
+        ]
+      },
+      {
+        "kategorie": "Drinks – Hot Drinks",
+        "eintraege": [
+          "Espresso",
+          "Doppio (Double Espresso)",
+          "Lungo / Americano",
+          "Div. Tea"
+        ]
+      },
+      {
+        "kategorie": "Drinks – Distillated",
+        "eintraege": ["Grappa 2cl", "Sambuca", "Limoncello 2cl"]
+      },
+      {
+        "kategorie": "Drinks – Wine (Glass)",
+        "eintraege": [
+          "Red Wine Glass 0.2L (Negroamaro)",
+          "White Wine Glass 0.2L (Vermentino)",
+          "Prosecco (0.1L)"
+        ]
+      },
+      {
+        "kategorie": "Drinks – Wine (Bottle)",
+        "eintraege": [
+          "Red Wine Bottle 0.75L – San Marzano, Negroamaro, Tratturi",
+          "Red Wine Bottle 0.75L – Primitivi di Manduria DOP",
+          "White Wine Bottle 0.75L – Alturis Sauvignon, Vignaioli in Terre di Confine",
+          "White Wine Bottle 0.75L – Vermentino"
+        ]
+      },
+      {
+        "kategorie": "Aperitivi & Longdrink",
+        "eintraege": ["Signature Long Drinks (ask staff / scan QR)"]
+      }
+    ]
+  }
+}

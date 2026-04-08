@@ -1,0 +1,30 @@
+{
+  "page": "Home",
+  "meta": {
+    "title": "Kantine Kohlmann - Restaurant & Bar Berlin",
+    "description": "Kantine Kohlmann: Restaurant und Bar in Berlin Kreuzberg. Genieße moderne deutsche Küche und erstklassige Cocktails."
+  },
+  "hero_section": {
+    "background_video_src": "/videos/dein-video-loop.mp4",
+    "background_video_placeholder": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "split_preview": {
+      "left": {
+        "concept": "Restaurant",
+        "link_to": "/restaurant",
+        "logo_src": "/content/logos/logo-restaurant.png",
+        "hover_text": "Zur Speisekarte & Tischreservierung"
+      },
+      "right": {
+        "concept": "Bar",
+        "link_to": "/bar",
+        "logo_src": "/content/logos/logo-bar.png",
+        "hover_text": "Drinks & Atmosphäre"
+      }
+    }
+  },
+  "contact": {
+    "address": "Skalitzer Str. 64, 10997 Berlin",
+    "phone": "",
+    "email": ""
+  }
+}
