@@ -1,30 +1,50 @@
 {
   "page": "Home",
   "meta": {
-    "title": "Kantine Kohlmann - Restaurant & Bar Berlin",
-    "description": "Kantine Kohlmann: Restaurant und Bar in Berlin Kreuzberg. Genieße moderne deutsche Küche und erstklassige Cocktails."
-  },
-  "hero_section": {
-    "background_video_src": "/videos/dein-video-loop.mp4",
-    "background_video_placeholder": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    "split_preview": {
-      "left": {
-        "concept": "Restaurant",
-        "link_to": "/restaurant",
-        "logo_src": "/content/logos/logo-restaurant.png",
-        "hover_text": "Zur Speisekarte & Tischreservierung"
-      },
-      "right": {
-        "concept": "Bar",
-        "link_to": "/bar",
-        "logo_src": "/content/logos/logo-bar.png",
-        "hover_text": "Drinks & Atmosphäre"
-      }
-    }
+    "title": "Kantine Kohlmann - Restaurant · Bar · Events Berlin",
+    "description": "Kantine Kohlmann: Restaurant und Bar in Berlin Kreuzberg. Genieße moderne Küche, erstklassige Cocktails und unvergessliche Events."
   },
   "contact": {
     "address": "Skalitzer Str. 64, 10997 Berlin",
     "phone": "",
     "email": ""
-  }
+  },
+  "panels": [
+    {
+      "id": "restaurant",
+      "href": "/restaurant",
+      "image": "/images/Restaurant/Resto3.jpg",
+      "badge": "Ristorante",
+      "titleA": "Saint",
+      "titleB": "Gennaro 081",
+      "cta1Label": "Explore Menu",
+      "cta1Href": "/restaurant#menu",
+      "cta2Label": "Reservierungen",
+      "cta2Href": "/restaurant"
+    },
+    {
+      "id": "bar",
+      "href": "/bar",
+      "image": "/images/Kantine Bar/bar_galerie_1.jpg",
+      "badge": "Bar",
+      "titleA": "Kantine",
+      "titleB": "Kohlmann",
+      "cta1Label": "View Drinks",
+      "cta1Href": "/bar#drinks",
+      "cta2Label": "The Experience",
+      "cta2Href": "/bar"
+    },
+    {
+      "id": "events",
+      "href": "/events",
+      "image": "/images/Event/Event5-1.jpg",
+      "badge": "Events",
+      "titleA": "The",
+      "titleB": "Basement",
+      "cta1Label": "Upcoming Events",
+      "cta1Href": "/events",
+      "cta2Label": "Private Hire",
+      "cta2Href": "/events#private"
+    }
+  ]
 }

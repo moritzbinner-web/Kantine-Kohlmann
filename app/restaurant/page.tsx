@@ -4,6 +4,7 @@ import { getBlurDataURL } from '@/lib/blur';
 import GalleryGrid from '@/components/GalleryGrid';
 import ParallaxSection from '@/components/ParallaxSection';
 import MagneticButton from '@/components/MagneticButton';
+import MenuSection from '@/components/MenuSection';
 import restaurantData from '@/data/restaurant.json';
 
 export const metadata = {
@@ -13,7 +14,6 @@ export const metadata = {
 };
 
 export default async function RestaurantPage() {
-  // Generate blur placeholders server-side
   const heroBlur = await getBlurDataURL(restaurantData.hero.imageSrc);
 
   const galleryWithBlur = await Promise.all(
@@ -26,32 +26,58 @@ export default async function RestaurantPage() {
   const { hero, about, menu } = restaurantData;
 
   return (
-    <div className="bg-[#0F1B42] min-h-screen">
+    <div style={{ background: '#0a0a0a' }} className="min-h-screen">
+
       {/* ── Navigation ────────────────────────────────────────────────────── */}
-      <nav className="fixed top-0 inset-x-0 z-50 glass-rest py-4 px-6 md:px-12 flex items-center justify-between">
+      <nav
+        className="fixed top-0 inset-x-0 z-50 py-5 px-8 md:px-14 flex items-center justify-between"
+        style={{
+          background: 'rgba(10,10,10,0.75)',
+          backdropFilter: 'blur(18px)',
+          borderBottom: '1px solid rgba(240,236,230,0.06)',
+        }}
+      >
         <Link
           href="/"
-          className="label-luxury text-[#C8A84B] text-[0.65rem] tracking-[0.3em] hover:text-[#E2C97E] transition-colors"
+          className="transition-opacity hover:opacity-60"
+          style={{
+            fontFamily: 'var(--font-jost)',
+            fontSize: '0.6rem',
+            letterSpacing: '0.4em',
+            textTransform: 'uppercase',
+            color: 'rgba(240,236,230,0.5)',
+          }}
         >
-          ← Zurück
+          ← Back
         </Link>
-        <span className="heading-display text-[#F5F0E8] text-lg italic">
+        <span
+          style={{
+            fontFamily: 'var(--font-playfair)',
+            fontSize: '1.1rem',
+            fontStyle: 'italic',
+            color: '#f0ece6',
+            letterSpacing: '0.04em',
+          }}
+        >
           Saint Gennaro 081
         </span>
-        <span className="label-luxury text-[#C8A84B]/60 text-[0.65rem] tracking-[0.3em]">
+        <span
+          style={{
+            fontFamily: 'var(--font-jost)',
+            fontSize: '0.6rem',
+            letterSpacing: '0.4em',
+            textTransform: 'uppercase',
+            color: 'rgba(240,236,230,0.25)',
+          }}
+        >
           Ristorante
         </span>
       </nav>
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[100dvh] overflow-hidden">
-        {/* Hero video (falls back to placeholder if local file missing) */}
         <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+          autoPlay muted loop playsInline preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src={hero.videoPlaceholder} type="video/mp4" />
@@ -61,9 +87,8 @@ export default async function RestaurantPage() {
         <div className="absolute inset-0">
           <Image
             src={hero.imageSrc}
-            alt="Saint Gennaro 081 Restaurant"
-            fill
-            priority
+            alt="Saint Gennaro 081"
+            fill priority
             sizes="100vw"
             className="object-cover opacity-0"
             placeholder="blur"
@@ -71,40 +96,79 @@ export default async function RestaurantPage() {
           />
         </div>
 
-        <div className="video-overlay" />
+        {/* Deep bottom gradient */}
+        <div
+          className="absolute inset-x-0 bottom-0 pointer-events-none"
+          style={{
+            height: '60%',
+            background: 'linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.5) 45%, transparent 100%)',
+          }}
+        />
+        {/* Light top gradient for nav legibility */}
+        <div
+          className="absolute inset-x-0 top-0 pointer-events-none"
+          style={{
+            height: '25%',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%)',
+          }}
+        />
 
-        {/* Hero content */}
-        <div className="absolute inset-0 flex items-center justify-center text-center px-6">
-          <div>
-            <div className="border-ornament-rest w-48 mx-auto mb-8" />
-            <span className="label-luxury text-[#C8A84B] block mb-4 tracking-[0.5em]">
-              Cucina Napoletana · Berlin Kreuzberg
-            </span>
-            <h1 className="heading-display text-5xl md:text-7xl lg:text-8xl text-[#F5F0E8] mb-4 italic">
-              {hero.headline}
-            </h1>
-            <p className="heading-serif text-xl text-[#F5F0E8]/70 mb-10">
-              {hero.subline}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <MagneticButton href="#menu" variant="restaurant">
-                Speisekarte
-              </MagneticButton>
-              <MagneticButton href="#gallery" variant="outline">
-                Galerie ansehen
-              </MagneticButton>
-            </div>
+        {/* Hero text — absolute bottom-left per design brief */}
+        <div className="absolute bottom-12 left-12 right-12 md:right-auto md:max-w-xl z-10">
+          <span
+            className="block mb-4"
+            style={{
+              fontFamily: 'var(--font-jost)',
+              fontSize: '0.58rem',
+              letterSpacing: '0.55em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.45)',
+            }}
+          >
+            Cucina Napoletana · Berlin Kreuzberg
+          </span>
+          <h1
+            className="text-white mb-6"
+            style={{
+              fontFamily: 'var(--font-playfair)',
+              fontSize: 'clamp(3.5rem, 7vw, 7rem)',
+              fontWeight: 400,
+              fontStyle: 'italic',
+              lineHeight: 0.95,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            {hero.headline}
+          </h1>
+          <p
+            className="mb-10"
+            style={{
+              fontFamily: 'var(--font-cormorant)',
+              fontSize: '1.25rem',
+              color: 'rgba(255,255,255,0.55)',
+              letterSpacing: '0.05em',
+              lineHeight: 1.7,
+              fontStyle: 'italic',
+            }}
+          >
+            {hero.subline}
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <MagneticButton href="#menu" variant="restaurant">Speisekarte</MagneticButton>
+            <MagneticButton href="#gallery" variant="outline">Galerie</MagneticButton>
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <span className="label-luxury text-white/40 text-[0.6rem]">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
+        {/* Scroll cue */}
+        <div className="absolute bottom-8 right-12 flex flex-col items-center gap-2 z-10">
+          <div className="w-px h-10 bg-gradient-to-b from-white/35 to-transparent" />
+          <span style={{ fontFamily: 'var(--font-jost)', fontSize: '0.5rem', letterSpacing: '0.4em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>
+            Scroll
+          </span>
         </div>
       </section>
 
-      {/* ── About / Parallax Section ─────────────────────────────────────── */}
+      {/* ── Parallax about section ────────────────────────────────────────── */}
       <ParallaxSection
         imageSrc={restaurantData.gallery[4].src}
         imageAlt="Restaurant Atmosphäre"
@@ -115,65 +179,74 @@ export default async function RestaurantPage() {
       />
 
       {/* ── Gallery ───────────────────────────────────────────────────────── */}
-      <section id="gallery" className="bg-[#0F1B42] py-24 px-4 md:px-8">
+      <section id="gallery" style={{ background: '#0d0d0d' }} className="py-24 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="border-ornament-rest w-32 mx-auto mb-6" />
-            <span className="label-luxury text-[#C8A84B] block mb-3">La Galleria</span>
-            <h2 className="heading-display text-4xl md:text-5xl text-[#F5F0E8]">
-              Il Nostro Spazio
-            </h2>
+          <div className="mb-14 grid grid-cols-3 gap-6">
+            <div>
+              <span style={{ fontFamily: 'var(--font-jost)', fontSize: '0.55rem', letterSpacing: '0.5em', textTransform: 'uppercase', color: 'rgba(240,236,230,0.3)' }}>
+                La Galleria
+              </span>
+            </div>
+            <div className="col-span-2">
+              <h2
+                style={{
+                  fontFamily: 'var(--font-playfair)',
+                  fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                  fontWeight: 400,
+                  color: '#f0ece6',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                Il Nostro Spazio
+              </h2>
+            </div>
           </div>
           <GalleryGrid items={galleryWithBlur} theme="restaurant" />
         </div>
       </section>
 
-      {/* ── Menu ─────────────────────────────────────────────────────────── */}
-      <section id="menu" className="bg-[#0A1230] py-24 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="border-ornament-rest w-32 mx-auto mb-6" />
-            <span className="label-luxury text-[#C8A84B] block mb-3">La Nostra Cucina</span>
-            <h2 className="heading-display text-4xl md:text-5xl text-[#F5F0E8] italic">
-              Speisekarte
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
-            {menu.categories.map((category) => (
-              <div key={category.kategorie} className="border-b border-[#C8A84B]/20 pb-8">
-                <h3 className="label-luxury text-[#C8A84B] text-[0.7rem] mb-4 block">
-                  {category.kategorie}
-                </h3>
-                <ul className="space-y-2">
-                  {category.eintraege.map((item) => (
-                    <li
-                      key={item}
-                      className="heading-serif text-[#F5F0E8]/80 text-base flex items-center gap-2"
-                    >
-                      <span className="w-1 h-1 rounded-full bg-[#C8A84B]/50 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── Editorial Menu ────────────────────────────────────────────────── */}
+      <MenuSection categories={menu.categories} />
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer className="bg-[#0F1B42] border-t border-[#C8A84B]/20 py-16 px-6 text-center">
-        <div className="border-ornament-rest w-24 mx-auto mb-8" />
-        <span className="heading-display text-2xl text-[#F5F0E8] italic block mb-2">
+      <footer
+        style={{ background: '#080808', borderTop: '1px solid rgba(240,236,230,0.06)' }}
+        className="py-16 px-8 text-center"
+      >
+        <span
+          style={{
+            fontFamily: 'var(--font-playfair)',
+            fontSize: '1.6rem',
+            fontStyle: 'italic',
+            color: '#f0ece6',
+            display: 'block',
+            marginBottom: '0.5rem',
+          }}
+        >
           Saint Gennaro 081
         </span>
-        <p className="label-luxury text-[#C8A84B]/60 text-[0.65rem] tracking-[0.3em] mb-6">
+        <p
+          style={{
+            fontFamily: 'var(--font-jost)',
+            fontSize: '0.6rem',
+            letterSpacing: '0.35em',
+            textTransform: 'uppercase',
+            color: 'rgba(240,236,230,0.3)',
+            marginBottom: '2rem',
+          }}
+        >
           {restaurantData.contact.address}
         </p>
         <Link
           href="/"
-          className="label-luxury text-[#C8A84B] text-[0.65rem] tracking-[0.3em] hover:text-[#E2C97E] transition-colors"
+          style={{
+            fontFamily: 'var(--font-jost)',
+            fontSize: '0.6rem',
+            letterSpacing: '0.35em',
+            textTransform: 'uppercase',
+            color: 'rgba(240,236,230,0.4)',
+          }}
+          className="hover:opacity-70 transition-opacity"
         >
           ← Zur Startseite
         </Link>

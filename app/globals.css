@@ -162,6 +162,68 @@ body {
   transform: scale(1.07);
 }
 
+/* ── Editorial Menu (Phase 4) ────────────────────────────────────────────── */
+
+/* "No-Line" rule: section boundaries via tonal background, not borders */
+.menu-surface        { background: #0f0f0f; }
+.menu-surface-raise  { background: #161616; }
+.menu-surface-inset  { background: #131313; }
+
+/* Category heading — large, wide, uppercase Playfair */
+.menu-category-title {
+  font-family: var(--font-playfair);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: #f0ece6;
+}
+
+/* Dish name — serif, medium */
+.menu-dish-name {
+  font-family: var(--font-playfair);
+  font-size: 1rem;
+  font-weight: 400;
+  color: #e8e4de;
+  line-height: 1.4;
+}
+
+/* Description — Inter, very small, tracked out, italic */
+.menu-dish-desc {
+  font-family: var(--font-jost);
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: rgba(240, 236, 230, 0.45);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Price — small, right-aligned */
+.menu-price {
+  font-family: var(--font-jost);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: rgba(240, 236, 230, 0.5);
+}
+
+/* Dot divider between sections */
+.menu-dot-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 2.5rem 0;
+}
+.menu-dot-divider span {
+  width: 4px;
+  height: 4px;
+  background: rgba(240, 236, 230, 0.18);
+  display: block;
+}
+
 /* ── Lenis CSS Reset ─────────────────────────────────────────────────────── */
 html.lenis,
 html.lenis body {
