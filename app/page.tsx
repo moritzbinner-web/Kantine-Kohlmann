@@ -1,14 +1,17 @@
 import { getBlurDataURL } from '@/lib/blur';
 import HomeClient from './HomeClient';
-import indexData from '@/data/index.json';
+import { getSiteModel } from '@/lib/site-model';
 import type { PanelData } from '@/components/TriSplitHero';
 
-export const metadata = {
-  title: indexData.meta.title,
-  description: indexData.meta.description,
-};
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata() {
+  const { meta } = (await getSiteModel()).index;
+  return { title: meta.title, description: meta.description };
+}
 
 export default async function Home() {
+  const indexData = (await getSiteModel()).index;
   // Generate blur placeholders server-side for each panel image
   const panels: PanelData[] = await Promise.all(
     indexData.panels.map(async (p) => ({

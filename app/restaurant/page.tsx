@@ -1,11 +1,14 @@
 import Image from 'next/image';
+import HeroVideo from '@/components/HeroVideo';
 import Link from 'next/link';
 import { getBlurDataURL } from '@/lib/blur';
 import GalleryGrid from '@/components/GalleryGrid';
 import ParallaxSection from '@/components/ParallaxSection';
 import MagneticButton from '@/components/MagneticButton';
 import MenuSection from '@/components/MenuSection';
-import restaurantData from '@/data/restaurant.json';
+import { getSiteModel } from '@/lib/site-model';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Saint Gennaro 081 – Cucina Napoletana Berlin',
@@ -14,6 +17,7 @@ export const metadata = {
 };
 
 export default async function RestaurantPage() {
+  const restaurantData = (await getSiteModel()).restaurant;
   const heroBlur = await getBlurDataURL(restaurantData.hero.imageSrc);
 
   const galleryWithBlur = await Promise.all(
@@ -79,12 +83,7 @@ export default async function RestaurantPage() {
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[100dvh] overflow-hidden">
-        <video
-          autoPlay muted loop playsInline preload="metadata"
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src={hero.videoPlaceholder} type="video/mp4" />
-        </video>
+        <HeroVideo src={hero.videoPlaceholder} />
 
         {/* Fallback image with blur-up */}
         <div className="absolute inset-0">
@@ -93,7 +92,7 @@ export default async function RestaurantPage() {
             alt="Saint Gennaro 081"
             fill priority
             sizes="100vw"
-            className="object-cover opacity-0"
+            className={`object-cover ${hero.videoPlaceholder ? "opacity-0" : ""}`}
             placeholder="blur"
             blurDataURL={heroBlur}
           />

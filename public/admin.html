@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Admin</title>
+<script src="/admin-config.js"></script>
+<style>
+/* Generisches Admin-Panel: baut Formulare aus dem Inhaltsmodell (JSON). Konfiguration: /admin-config.js */
+:root{--bg:#f4f3ef;--card:#fff;--ink:#1d1b19;--muted:#76716a;--line:#e3dfd8;--accent:#8a6d3b;--danger:#b3372f;--ok:#2f7a4d;--r:12px}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{font:14px/1.5 -apple-system,"Helvetica Neue",Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,textarea,select{font:inherit;color:inherit}a{color:inherit}
+.login{min-height:100vh;display:grid;place-items:center;padding:16px;background:radial-gradient(circle at 15% 10%,#fff 0,transparent 45%),var(--bg)}
+.login form{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px;width:min(380px,100%);box-shadow:0 20px 60px #0002}
+.login h1{margin:4px 0 18px;font-size:24px;letter-spacing:-.02em}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hint{background:color-mix(in srgb,var(--accent) 8%,#fff);border:1px solid color-mix(in srgb,var(--accent) 35%,#fff);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:13px}
+.hint code{background:#fff;padding:1px 7px;border-radius:5px;font-weight:700;font-family:ui-monospace,monospace}
+label.f{display:block;margin-bottom:12px;min-width:0}label.f>span{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+input[type=text],input[type=password],input[type=number],textarea{width:100%;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff;outline:none;transition:.15s}
+textarea{height:auto;min-height:84px;padding:10px 12px;line-height:1.55;resize:vertical}
+input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 15px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;white-space:nowrap;font-weight:500;font-size:13px;text-decoration:none}
+.btn:hover{border-color:#bbb}.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}.btn.pri:hover{filter:brightness(1.1)}
+.btn.sm{height:30px;padding:0 10px;font-size:12px}.btn.dng:hover{border-color:var(--danger);color:var(--danger);background:#fdf2f1}.btn[disabled]{opacity:.4;pointer-events:none}
+.top{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .in{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 24px}.top .sp{flex:1}
+.logo{display:flex;align-items:center;gap:10px}.logo i{width:34px;height:34px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-style:normal;font-weight:700}
+.status{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}.dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}.dot.dirty{background:#d99a1e}
+.strip{background:color-mix(in srgb,var(--accent) 8%,#fff);border-top:1px solid var(--line);padding:7px 24px;text-align:center;font-size:12px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:240px 1fr;gap:26px;max-width:1240px;margin:0 auto;padding:26px 24px 90px}
+.side{position:sticky;top:110px;align-self:start;display:flex;flex-direction:column;gap:4px}
+.side button{all:unset;cursor:pointer;padding:10px 12px;border-radius:10px;font-weight:600;font-size:14px}.side button:hover{background:#fff8}
+.side button.on{background:#fff;box-shadow:0 1px 2px #0001;outline:1px solid var(--line);color:var(--accent)}.side small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:16px}
+.card>h2{margin:0 0 4px;font-size:21px;letter-spacing:-.02em}.card>p.sub{margin:0 0 18px;color:var(--muted)}
+fieldset{grid-column:1/-1;border:1px solid var(--line);border-radius:10px;padding:14px 16px 4px;margin:0 0 14px;min-width:0}legend{padding:0 6px;font-weight:600;font-size:13px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0 14px}
+.item{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;background:#fcfbf9}
+.item>header{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer}.item>header b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13.5px}
+.item>header .n{font:600 11px ui-monospace,monospace;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.item>.body{padding:6px 12px 2px;border-top:1px solid var(--line);background:#fff;border-radius:0 0 10px 10px}
+.item.closed>.body{display:none}
+.img{display:flex;gap:12px;align-items:flex-start}.img .pv{width:96px;height:72px;border-radius:8px;border:1px solid var(--line);background:#eee center/cover no-repeat;flex:none}
+.img .ctl{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}.img .ctl .row{display:flex;gap:6px}
+.str{display:flex;gap:6px;margin-bottom:6px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1d1b19;color:#fff;padding:11px 20px;border-radius:99px;z-index:99;box-shadow:0 8px 30px #0005;max-width:calc(100% - 32px)}.toast.err{background:var(--danger)}
+.muted{color:var(--muted)}
+@media(max-width:860px){.layout{grid-template-columns:1fr;padding:16px 14px 80px}.side{position:static;flex-direction:row;flex-wrap:wrap}.top .in{padding:10px 14px}}
+</style></head><body><div id="root"></div>
+<script>
+'use strict';
+const C = Object.assign({ title: 'Website', accent: '#8a6d3b', sections: {}, labels: {}, hidden: [], sectionHints: {} }, window.ADMIN_CONFIG || {});
+document.documentElement.style.setProperty('--accent', C.accent);
+document.title = 'Admin · ' + C.title;
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clone = x => JSON.parse(JSON.stringify(x));
+const S = { token: sessionStorage.getItem('adm-token') || '', model: null, saved: '', demo: false, storage: '', sec: null, open: new Set() };
+const LABELS = Object.assign({ headline: 'Überschrift', subline: 'Unterzeile', text: 'Text', title: 'Titel', titleA: 'Titel (Zeile 1)', titleB: 'Titel (Zeile 2)', image: 'Bild', imageSrc: 'Bild', src: 'Bild', alt: 'Bildbeschreibung', poster: 'Standbild', videoSrc: 'Video', video: 'Video', address: 'Adresse', phone: 'Telefon', email: 'E-Mail', hours: 'Öffnungszeiten', days: 'Tage', time: 'Uhrzeit', gallery: 'Galerie', menu: 'Speisekarte', categories: 'Kategorien', kategorie: 'Kategorie', eintraege: 'Einträge', items: 'Einträge', name: 'Name', price: 'Preis', desc: 'Beschreibung', description: 'Beschreibung', badge: 'Kennzeichnung', href: 'Link', url: 'Link', label: 'Beschriftung', tagline: 'Tagline', meta: 'Suchmaschinen (SEO)', panels: 'Kacheln', about: 'Über uns', contact: 'Kontakt', hero: 'Kopfbereich', category: 'Kategorie', teaser: 'Teaser-Text', events: 'Events', cta1Label: 'Button 1 – Text', cta1Href: 'Button 1 – Link', cta2Label: 'Button 2 – Text', cta2Href: 'Button 2 – Link', drink_highlights: 'Drink-Highlights', paragraphs: 'Absätze', quote: 'Zitat', logos: 'Logos', words: 'Wörter' }, C.labels);
+const label = k => LABELS[k] || String(k).replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase());
+const isImg = (k, v) => /^(image|imageSrc|src|poster|logo|img|photo|bild)$/i.test(k) || /\.(jpe?g|png|webp|gif|avif|svg)(\?|$)/i.test(v) || /^\/sbx-file\//.test(v) && !/video/i.test(k);
+const isVideo = (k, v) => /video|reel/i.test(k) || /\.(mp4|mov|webm)(\?|$)/i.test(v) || /youtu|vimeo/i.test(v);
+const isLong = (k, v) => /^(text|desc|description|teaser|intro|body|quote)$/i.test(k) || String(v).length > 90;
+const U = u => !u ? '' : /^(https?:)?\/|^data:/.test(u) ? u : '/' + u;
+
+function toast(msg, err) { const t = document.createElement('div'); t.className = 'toast' + (err ? ' err' : ''); t.textContent = msg; document.body.append(t); setTimeout(() => t.remove(), err ? 5000 : 2400); }
+async function api(path, opts = {}) {
+  const res = await fetch(path, { ...opts, headers: { ...(opts.headers || {}), Authorization: 'Bearer ' + S.token } });
+  const d = await res.json().catch(() => ({}));
+  if (res.status === 401 && S.token) { logout(); throw new Error('Sitzung abgelaufen – bitte neu anmelden'); }
+  if (!res.ok) throw new Error(d.error || 'Fehler ' + res.status);
+  return d;
+}
+function logout() { sessionStorage.removeItem('adm-token'); S.token = ''; S.model = null; render(); }
+const dirty = () => S.model && JSON.stringify(S.model) !== S.saved;
+addEventListener('beforeunload', e => { if (dirty()) e.preventDefault(); });
+
+/* ---- Pfade im Modell ---- */
+const getAt = (p) => p.reduce((o, k) => o?.[k], S.model);
+function setAt(p, v) { const o = getAt(p.slice(0, -1)); o[p.at(-1)] = v; markDirty(); }
+const P = s => JSON.parse(s);
+
+/* ---- Bilder: Demo → Browser (IndexedDB + /sbx-sw.js), sonst Upload ---- */
+const sbxDb = () => new Promise((res, rej) => { const r = indexedDB.open('sbx-files', 1); r.onupgradeneeded = () => r.result.createObjectStore('files'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+async function sbxWorker() { if (!('serviceWorker' in navigator)) return false; try { await navigator.serviceWorker.register('/sbx-sw.js', { scope: '/' }); await navigator.serviceWorker.ready; if (!navigator.serviceWorker.controller) await new Promise(r => { const t = setTimeout(r, 3000); navigator.serviceWorker.addEventListener('controllerchange', () => { clearTimeout(t); r(); }, { once: true }); }); return !!navigator.serviceWorker.controller; } catch { return false; } }
+async function shrink(file) {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return file;
+  try { const b = await createImageBitmap(file), k = Math.min(1, 2000 / Math.max(b.width, b.height)); const cv = document.createElement('canvas'); cv.width = Math.round(b.width * k); cv.height = Math.round(b.height * k); cv.getContext('2d').drawImage(b, 0, 0, cv.width, cv.height); const out = await new Promise(r => cv.toBlob(r, 'image/webp', .86)); return out && out.size < file.size ? out : file; } catch { return file; }
+}
+const slug = s => s.toLowerCase().replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'datei';
+async function upload(file) {
+  const isVid = file.type.startsWith('video/');
+  const blob = isVid ? file : await shrink(file);
+  if (S.demo) {
+    if (!(await sbxWorker())) throw new Error('Dieser Browser unterstützt die Demo-Uploads nicht');
+    const id = [...crypto.getRandomValues(new Uint8Array(12))].map(b => b.toString(16).padStart(2, '0')).join('');
+    const db = await sbxDb();
+    await new Promise((res, rej) => { const tx = db.transaction('files', 'readwrite'); tx.objectStore('files').put({ blob, type: blob.type || file.type, name: file.name, at: Date.now() }, id); tx.oncomplete = res; tx.onerror = () => rej(tx.error || new Error('Browser-Speicher voll?')); });
+    return `/sbx-file/${id}/${slug(file.name)}${isVid ? '.mp4' : ''}`;
+  }
+  if (isVid) throw new Error('Videos bitte als Link (YouTube, Vimeo, MP4-URL) einfügen');
+  if (blob.size > 4.4e6) throw new Error('Bild zu groß (max. 4 MB)');
+  const res = await fetch('/api/upload?name=' + encodeURIComponent(slug(file.name)), { method: 'POST', headers: { Authorization: 'Bearer ' + S.token, 'Content-Type': blob.type || file.type }, body: blob });
+  const d = await res.json().catch(() => ({})); if (!res.ok) throw new Error(d.error || 'Upload fehlgeschlagen'); return d.url;
+}
+const pick = accept => new Promise(r => { const i = document.createElement('input'); i.type = 'file'; i.accept = accept; i.onchange = () => r(i.files[0]); i.click(); });
+
+/* ---- Formular aus Daten ---- */
+function field(k, v, p) {
+  const ps = esc(JSON.stringify(p)), lab = esc(label(k));
+  if (typeof v === 'boolean') return `<label class="f"><span>${lab}</span><input type="checkbox" data-p="${ps}" ${v ? 'checked' : ''}></label>`;
+  if (typeof v === 'number') return `<label class="f"><span>${lab}</span><input type="number" step="any" data-p="${ps}" data-num value="${esc(v)}"></label>`;
+  if (v === null || typeof v === 'string') {
+    v = v ?? '';
+    if (isImg(k, v) || isVideo(k, v)) {
+      const vid = isVideo(k, v) && !/\.(jpe?g|png|webp|gif|avif|svg)(\?|$)/i.test(v);
+      return `<div class="f img" style="margin-bottom:12px">${vid ? '<div class="pv" style="display:grid;place-items:center;color:#888;font-size:22px">▶</div>' : `<div class="pv" style="background-image:url('${esc(U(v))}')"></div>`}
+        <div class="ctl"><label class="f" style="margin:0"><span>${lab}</span><input type="text" data-p="${ps}" value="${esc(v)}" placeholder="${vid ? 'YouTube-, Vimeo- oder MP4-Link' : 'Bild-URL oder hochladen'}"></label>
+        <div class="row"><button class="btn sm" data-up="${ps}" data-accept="${vid ? 'video/*' : 'image/*'}">${vid ? 'Video wählen' : 'Bild hochladen'}</button>${vid ? '<span class="muted" style="font-size:12px;align-self:center">oder Link von YouTube / Vimeo einfügen</span>' : ''}</div></div></div>`;
+    }
+    return isLong(k, v) ? `<label class="f" style="grid-column:1/-1"><span>${lab}</span><textarea data-p="${ps}" rows="${Math.min(10, Math.max(3, Math.ceil(v.length / 90)))}">${esc(v)}</textarea></label>`
+      : `<label class="f"><span>${lab}</span><input type="text" data-p="${ps}" value="${esc(v)}"></label>`;
+  }
+  if (Array.isArray(v)) return arrayField(k, v, p);
+  if (typeof v === 'object') return `<fieldset><legend>${lab}</legend><div class="grid2">${Object.entries(v).filter(([kk]) => !C.hidden.includes(kk)).map(([kk, vv]) => field(kk, vv, [...p, kk])).join('')}</div></fieldset>`;
+  return '';
+}
+const titleOf = (o, i) => { if (typeof o !== 'object' || !o) return String(o || '—'); const s = Object.entries(o).find(([k, x]) => typeof x === 'string' && x && !isImg(k, x) && !isVideo(k, x)); return s ? s[1] : 'Eintrag ' + (i + 1); };
+function arrayField(k, arr, p) {
+  const ps = esc(JSON.stringify(p));
+  const prim = arr.every(x => typeof x !== 'object' || x === null);
+  if (prim && !arr.some(x => typeof x === 'string' && isImg(k, x))) {
+    return `<fieldset style="grid-column:1/-1"><legend>${esc(label(k))}</legend>${arr.map((x, i) => `<div class="str"><input type="text" data-p="${esc(JSON.stringify([...p, i]))}" value="${esc(x)}"><button class="btn sm" data-mv="${ps}" data-i="${i}" data-d="-1">↑</button><button class="btn sm" data-mv="${ps}" data-i="${i}" data-d="1">↓</button><button class="btn sm dng" data-rm="${ps}" data-i="${i}">✕</button></div>`).join('')}
+      <button class="btn sm" data-add="${ps}" style="margin:4px 0 12px">+ Hinzufügen</button></fieldset>`;
+  }
+  return `<fieldset style="grid-column:1/-1"><legend>${esc(label(k))} <span class="muted">(${arr.length})</span></legend>
+   ${arr.map((x, i) => { const ip = JSON.stringify([...p, i]); const closed = !S.open.has(ip); return `<div class="item ${closed ? 'closed' : ''}"><header data-tg="${esc(ip)}"><span class="n">${String(i + 1).padStart(2, '0')}</span><b>${esc(titleOf(x, i))}</b>
+     <button class="btn sm" data-mv="${ps}" data-i="${i}" data-d="-1" title="Nach oben">↑</button><button class="btn sm" data-mv="${ps}" data-i="${i}" data-d="1" title="Nach unten">↓</button><button class="btn sm" data-dup="${ps}" data-i="${i}" title="Duplizieren">⧉</button><button class="btn sm dng" data-rm="${ps}" data-i="${i}" title="Entfernen">✕</button></header>
+     ${closed ? '' : `<div class="body"><div class="grid2">${typeof x === 'object' && x ? Object.entries(x).filter(([kk]) => !C.hidden.includes(kk)).map(([kk, vv]) => field(kk, vv, [...p, i, kk])).join('') : field(k, x, [...p, i])}</div></div>`}</div>`; }).join('')}
+   <button class="btn sm" data-add="${ps}" style="margin:2px 0 12px">+ Eintrag hinzufügen</button></fieldset>`;
+}
+const blank = x => Array.isArray(x) ? [] : x && typeof x === 'object' ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, blank(v)])) : typeof x === 'number' ? 0 : typeof x === 'boolean' ? false : '';
+
+/* ---- Rendering ---- */
+const sections = () => Object.keys(S.model).filter(k => !['version', 'updatedAt'].includes(k) && !C.hidden.includes(k));
+function markDirty() { const st = $('#st'); if (st) st.innerHTML = statusHtml(); $('#save') && ($('#save').disabled = !dirty()); $('#discard') && ($('#discard').disabled = !dirty()); }
+const statusHtml = () => `<span class="dot ${dirty() ? 'dirty' : ''}"></span>${dirty() ? 'Ungespeicherte Änderungen' : S.model.updatedAt ? 'Gespeichert ' + new Date(S.model.updatedAt).toLocaleString('de-DE') : S.demo ? 'Originalzustand' : 'Grundzustand'} · ${S.demo ? 'Demo-Vorschau (nur Ihr Browser)' : S.storage === 'vercel-blob' ? 'Vercel Blob' : 'lokal'}`;
+function render() {
+  const root = $('#root');
+  if (!S.token) {
+    root.innerHTML = `<div class="login"><form id="lf"><div class="eyebrow">Admin-Panel · ${esc(C.title)}</div><h1>Anmelden</h1>
+      <div id="dh"></div><label class="f"><span>Passwort</span><input type="password" id="pw" autofocus autocomplete="current-password"></label><button class="btn pri" style="width:100%;height:44px">Anmelden</button></form></div>`;
+    fetch('/api/login').then(r => r.json()).then(d => { if (d.demo) $('#dh').innerHTML = '<div class="hint"><b>Demo-Zugang</b><br>Passwort: <code>1234</code><div class="muted" style="margin-top:6px;font-size:12px">Probieren Sie alles aus – Texte, Fotos und Videos sind nur eine Vorschau in Ihrem Browser.</div></div>'; }).catch(() => {});
+    $('#lf').onsubmit = async e => { e.preventDefault(); try { const r = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: $('#pw').value }) }); const d = await r.json(); if (!r.ok) throw new Error(d.error); S.token = d.token; sessionStorage.setItem('adm-token', d.token); render(); } catch (er) { toast(er.message, true); $('#pw').select(); } };
+    return;
+  }
+  if (!S.model) { root.innerHTML = '<p style="text-align:center;margin-top:30vh" class="muted">Lade …</p>'; api('/api/admin').then(d => { S.model = d.model; S.saved = JSON.stringify(d.model); S.demo = !!d.demo; S.storage = d.storage; S.sec = sections()[0]; if (S.demo) sbxWorker(); render(); }).catch(e => toast(e.message, true)); return; }
+  const sec = S.sec, y = scrollY;
+  root.innerHTML = `<div class="top"><div class="in"><div class="logo"><i>${esc(C.title[0] || 'A')}</i><div><b>${esc(C.title)} bearbeiten</b><div class="status" id="st">${statusHtml()}</div></div></div><span class="sp"></span>
+    <a class="btn" href="/" target="_blank">Website ansehen ↗</a><button class="btn" id="discard" ${dirty() ? '' : 'disabled'}>Verwerfen</button><button class="btn dng" id="reset">Zurücksetzen</button><button class="btn pri" id="save" ${dirty() ? '' : 'disabled'}>${S.demo ? 'Vorschau speichern' : 'Speichern & veröffentlichen'}</button><button class="btn" id="lo" title="Abmelden">⎋</button></div>
+    ${S.demo ? '<div class="strip">Demo-Modus: Ändern Sie alles nach Belieben. Gespeichert wird nur eine Vorschau für Ihren Browser – die echte Website bleibt unverändert.</div>' : ''}</div>
+    <div class="layout"><nav class="side">${sections().map(k => `<button data-sec="${esc(k)}" class="${k === sec ? 'on' : ''}">${esc(C.sections[k] || label(k))}${C.sectionHints[k] ? `<small>${esc(C.sectionHints[k])}</small>` : ''}</button>`).join('')}</nav>
+    <main><div class="card"><h2>${esc(C.sections[sec] || label(sec))}</h2><p class="sub">${esc(C.sectionHints[sec] || 'Felder ändern, dann oben speichern.')}</p>
+    <div class="grid2">${Object.entries(S.model[sec]).filter(([k]) => !C.hidden.includes(k)).map(([k, v]) => field(k, v, [sec, k])).join('')}</div></div></main></div>`;
+  scrollTo(0, y);
+}
+document.addEventListener('input', e => { const el = e.target.closest('[data-p]'); if (!el) return; const p = P(el.dataset.p); setAt(p, el.type === 'checkbox' ? el.checked : el.dataset.num !== undefined ? Number(el.value) : el.value); if (el.closest('.img') && el.type === 'text') { const pv = el.closest('.img').querySelector('.pv'); if (pv && !/▶/.test(pv.textContent)) pv.style.backgroundImage = `url('${U(el.value)}')`; } });
+document.addEventListener('change', e => { const el = e.target.closest('input[type=checkbox][data-p]'); if (el) setAt(P(el.dataset.p), el.checked); });
+document.addEventListener('click', async e => {
+  const t = e.target.closest('button,[data-tg]'); if (!t) return;
+  try {
+    if (t.dataset.sec) { S.sec = t.dataset.sec; scrollTo(0, 0); render(); return; }
+    if (t.id === 'lo') return logout();
+    if (t.id === 'discard') { S.model = JSON.parse(S.saved); render(); return; }
+    if (t.id === 'save') { t.disabled = true; const r = await api('/api/admin', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(S.model) }); S.model.updatedAt = r.updatedAt; S.saved = JSON.stringify(S.model); toast(S.demo ? 'Vorschau gespeichert – nur in Ihrem Browser sichtbar' : 'Gespeichert – die Website zeigt den neuen Stand'); render(); return; }
+    if (t.id === 'reset') { if (!confirm(S.demo ? 'Ihre Vorschau verwerfen und das Original zeigen?' : 'Alle Änderungen verwerfen und den Grundzustand wiederherstellen?')) return; const r = await api('/api/admin', { method: 'DELETE' }); if (S.demo) { try { const db = await sbxDb(); db.transaction('files', 'readwrite').objectStore('files').clear(); } catch {} } S.model = r.model; S.saved = JSON.stringify(r.model); toast('Zurückgesetzt'); render(); return; }
+    if (t.dataset.tg && !e.target.closest('button')) { const k = t.dataset.tg; S.open.has(k) ? S.open.delete(k) : S.open.add(k); render(); return; }
+    const arrOp = (attr, fn) => { if (t.dataset[attr] === undefined) return false; e.stopPropagation(); const arr = getAt(P(t.dataset[attr])); fn(arr, +t.dataset.i); markDirty(); render(); return true; };
+    if (arrOp('mv', (a, i) => { const j = i + +t.dataset.d; if (j < 0 || j >= a.length) return; [a[i], a[j]] = [a[j], a[i]]; })) return;
+    if (arrOp('rm', (a, i) => { if (confirm('Eintrag entfernen?')) a.splice(i, 1); })) return;
+    if (arrOp('dup', (a, i) => a.splice(i + 1, 0, clone(a[i])))) return;
+    if (t.dataset.add !== undefined) { const p = P(t.dataset.add), a = getAt(p); a.push(a.length ? blank(a[a.length - 1]) : ''); S.open.add(JSON.stringify([...p, a.length - 1])); markDirty(); render(); return; }
+    if (t.dataset.up) { const f = await pick(t.dataset.accept); if (!f) return; toast('Lädt …'); const url = await upload(f); setAt(P(t.dataset.up), url); render(); toast('Übernommen – Speichern nicht vergessen'); return; }
+  } catch (er) { toast(er.message, true); }
+});
+render();
+</script></body></html>

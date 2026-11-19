@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Playfair_Display, Cormorant_Garamond, Jost } from 'next/font/google';
 import './globals.css';
 import SmoothScrollProvider from './providers/SmoothScrollProvider';
+import DemoBar from '@/components/DemoBar';
+import { isDemo } from '@/lib/demo';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -52,6 +54,7 @@ export default function RootLayout({
     >
       <body>
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        {isDemo() && <DemoBar />}
       </body>
     </html>
   );

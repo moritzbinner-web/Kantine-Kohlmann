@@ -1,10 +1,13 @@
 import Image from 'next/image';
+import HeroVideo from '@/components/HeroVideo';
 import Link from 'next/link';
 import { getBlurDataURL } from '@/lib/blur';
 import GalleryGrid from '@/components/GalleryGrid';
 import ParallaxSection from '@/components/ParallaxSection';
 import MagneticButton from '@/components/MagneticButton';
-import barData from '@/data/bar.json';
+import { getSiteModel } from '@/lib/site-model';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Kantine Kohlmann Bar – Cocktails & Wein Berlin Kreuzberg',
@@ -22,6 +25,7 @@ const NAV_STYLE = {
 const ACCENT = '#B8A98A'; // warm taupe
 
 export default async function BarPage() {
+  const barData = (await getSiteModel()).bar;
   const heroBlur = await getBlurDataURL(barData.hero.imageSrc);
   const galleryWithBlur = await Promise.all(
     barData.gallery.map(async (item) => ({
@@ -55,13 +59,10 @@ export default async function BarPage() {
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[100dvh] overflow-hidden">
-        <video autoPlay muted loop playsInline preload="metadata"
-          className="absolute inset-0 w-full h-full object-cover">
-          <source src={hero.videoPlaceholder} type="video/mp4" />
-        </video>
+        <HeroVideo src={hero.videoPlaceholder} />
         <div className="absolute inset-0">
           <Image src={hero.imageSrc} alt="Kantine Kohlmann Bar" fill priority sizes="100vw"
-            className="object-cover opacity-0" placeholder="blur" blurDataURL={heroBlur} />
+            className={`object-cover ${hero.videoPlaceholder ? "opacity-0" : ""}`} placeholder="blur" blurDataURL={heroBlur} />
         </div>
 
         <div className="absolute inset-x-0 bottom-0 pointer-events-none"

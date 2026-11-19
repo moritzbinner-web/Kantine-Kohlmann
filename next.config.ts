@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Admin-Panel (statische Seite public/admin.html)
+  async rewrites() {
+    return [{ source: "/admin", destination: "/admin.html" }];
+  },
   turbopack: {
     root: __dirname,
   },
