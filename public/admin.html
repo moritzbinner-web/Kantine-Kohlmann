@@ -145,6 +145,16 @@ function markDirty() { const st = $('#st'); if (st) st.innerHTML = statusHtml();
 const statusHtml = () => `<span class="dot ${dirty() ? 'dirty' : ''}"></span>${dirty() ? 'Ungespeicherte Änderungen' : S.model.updatedAt ? 'Gespeichert ' + new Date(S.model.updatedAt).toLocaleString('de-DE') : S.demo ? 'Originalzustand' : 'Grundzustand'} · ${S.demo ? 'Demo-Vorschau (nur Ihr Browser)' : S.storage === 'vercel-blob' ? 'Vercel Blob' : 'lokal'}`;
 function render() {
   const root = $('#root');
+  if (!S.token && !S.autoTried) {
+    // Demo: ohne Login-Seite direkt anmelden (Passwort ist öffentlich 1234)
+    S.autoTried = true;
+    root.innerHTML = '<p style="text-align:center;margin-top:30vh" class="muted">Lade …</p>';
+    fetch('/api/login').then(r => r.json()).then(async d => {
+      if (d.demo) { const r = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: '1234' }) }); const j = await r.json(); if (r.ok) { S.token = j.token; sessionStorage.setItem('adm-token', j.token); } }
+      render();
+    }).catch(() => render());
+    return;
+  }
   if (!S.token) {
     root.innerHTML = `<div class="login"><form id="lf"><div class="eyebrow">Admin-Panel · ${esc(C.title)}</div><h1>Anmelden</h1>
       <div id="dh"></div><label class="f"><span>Passwort</span><input type="password" id="pw" autofocus autocomplete="current-password"></label><button class="btn pri" style="width:100%;height:44px">Anmelden</button></form></div>`;
@@ -155,7 +165,7 @@ function render() {
   if (!S.model) { root.innerHTML = '<p style="text-align:center;margin-top:30vh" class="muted">Lade …</p>'; api('/api/admin').then(d => { S.model = d.model; S.saved = JSON.stringify(d.model); S.demo = !!d.demo; S.storage = d.storage; S.sec = sections()[0]; if (S.demo) sbxWorker(); render(); }).catch(e => toast(e.message, true)); return; }
   const sec = S.sec, y = scrollY;
   root.innerHTML = `<div class="top"><div class="in"><div class="logo"><i>${esc(C.title[0] || 'A')}</i><div><b>${esc(C.title)} bearbeiten</b><div class="status" id="st">${statusHtml()}</div></div></div><span class="sp"></span>
-    <a class="btn" href="/" target="_blank">Website ansehen ↗</a><button class="btn" id="discard" ${dirty() ? '' : 'disabled'}>Verwerfen</button><button class="btn dng" id="reset">Zurücksetzen</button><button class="btn pri" id="save" ${dirty() ? '' : 'disabled'}>${S.demo ? 'Vorschau speichern' : 'Speichern & veröffentlichen'}</button><button class="btn" id="lo" title="Abmelden">⎋</button></div>
+    <a class="btn" href="/" target="_blank">Website ansehen ↗</a><button class="btn" id="discard" ${dirty() ? '' : 'disabled'}>Verwerfen</button><button class="btn dng" id="reset">Zurücksetzen</button><button class="btn pri" id="save" ${dirty() ? '' : 'disabled'}>${S.demo ? 'Vorschau speichern' : 'Speichern & veröffentlichen'}</button>${S.demo ? '' : '<button class="btn" id="lo" title="Abmelden">⎋</button>'}</div>
     ${S.demo ? '<div class="strip">Demo-Modus: Ändern Sie alles nach Belieben. Gespeichert wird nur eine Vorschau für Ihren Browser – die echte Website bleibt unverändert.</div>' : ''}</div>
     <div class="layout"><nav class="side">${sections().map(k => `<button data-sec="${esc(k)}" class="${k === sec ? 'on' : ''}">${esc(C.sections[k] || label(k))}${C.sectionHints[k] ? `<small>${esc(C.sectionHints[k])}</small>` : ''}</button>`).join('')}</nav>
     <main><div class="card"><h2>${esc(C.sections[sec] || label(sec))}</h2><p class="sub">${esc(C.sectionHints[sec] || 'Felder ändern, dann oben speichern.')}</p>
